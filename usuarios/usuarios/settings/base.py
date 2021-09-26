@@ -34,7 +34,10 @@ BASE_DIR = Path(__file__).ancestor(3)
 SECRET_KEY = get_settings('SECRET_KEY')
 
 # Local Apps
-LOCAL_APPS = []
+LOCAL_APPS = [
+    'applications.home',
+    'applications.users',
+]
 
 # Thirds Apps
 THIRD_PARTY_APPS = []
@@ -47,6 +50,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -129,3 +133,9 @@ STATICFILES_DIRS = [BASE_DIR.child('static')]  # Especifica la ruta carpeta
 # Define la subida de archivos
 MEDIA_URL = '/media/'  # Especifica la url
 MEDIA_ROOT = BASE_DIR.child('media')  # Especifica la ruta caperta
+
+
+
+# Especificando manualmente nuestro modelo de usuarios
+# <<name_app>>.<<Clase Model>>
+AUTH_USER_MODEL = 'users.User'
