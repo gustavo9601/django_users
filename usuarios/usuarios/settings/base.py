@@ -3,6 +3,24 @@ from pathlib import Path
 import os
 import sys
 
+from django.core.exceptions import ImproperlyConfigured
+import json
+
+# LOAD SETTINGS
+with open('./../secret.json') as file:
+    SETTINGS = json.loads(file.read())
+
+
+def get_settings(key: str, settings=SETTINGS):
+    try:
+        return settings[key]
+    except:
+        raise ImproperlyConfigured(f'The key [{key}] does not found in file secret.json')
+
+
+ENVIRONMENT = get_settings('ENVIRONMENT')
+print("SETTINGS >> ", SETTINGS)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 from unipath import Path
@@ -13,10 +31,16 @@ BASE_DIR = Path(__file__).ancestor(3)
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6nj7+4m-d93%o*u2y(jsp@(clu)hl71i%3-wk0v3x-a@b9h0i3'
+SECRET_KEY = get_settings('SECRET_KEY')
+
+# Local Apps
+LOCAL_APPS = []
+
+# Thirds Apps
+THIRD_PARTY_APPS = []
 
 # Application definition
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -24,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -36,7 +62,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'usuarios.urls'
-
 
 TEMPLATES = [
     {
@@ -98,10 +123,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = ['127.0.0.1']
 
 # Define la ruta archivos staticos del proyecto
-STATIC_URL = '/static/' # Especifica la url
-STATICFILES_DIRS = [BASE_DIR.child('static')] # Especifica la ruta carpeta
-
+STATIC_URL = '/static/'  # Especifica la url
+STATICFILES_DIRS = [BASE_DIR.child('static')]  # Especifica la ruta carpeta
 
 # Define la subida de archivos
-MEDIA_URL = '/media/' # Especifica la url
-MEDIA_ROOT = BASE_DIR.child('media') # Especifica la ruta caperta
+MEDIA_URL = '/media/'  # Especifica la url
+MEDIA_ROOT = BASE_DIR.child('media')  # Especifica la ruta caperta

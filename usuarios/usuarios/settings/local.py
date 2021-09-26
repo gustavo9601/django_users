@@ -1,7 +1,7 @@
 from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = get_settings('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -11,10 +11,10 @@ ALLOWED_HOSTS = []
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_usuarios',
-        'USER': 'django_usuarios',
-        'PASSWORD': 'Pruebas1234*',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'NAME': get_settings('NAME'),
+        'USER': get_settings('USER'),
+        'PASSWORD': get_settings('PASSWORD'),
+        'HOST': get_settings('HOST'),
+        'PORT': get_settings('PORT')
     }
 }
