@@ -56,7 +56,7 @@ class LoginUserView(FormView):
 
 # View => es el padre de todas las vistas
 class LogoutUserView(View):
-
+    # metodo GET por la url
     def get(self, request, *args, **kwargs):
         # Cierra la sesion
         logout(request)
