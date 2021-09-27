@@ -12,7 +12,7 @@
 <h1>Bienvenido usuario: {{ user }}</h1>
 <ul>
     <li><a href="{% url 'users_app:logout' %}">Cerrar sesion</a></li>
-    <li>Actualizar datos</li>
+    <li><a href="{% url 'users_app:update_password' %}">Actualizar contraseña</a></li>
 </ul>
 </body>
 </html>

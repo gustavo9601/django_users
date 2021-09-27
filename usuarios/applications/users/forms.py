@@ -67,3 +67,42 @@ class UserLoginForm(forms.Form):
             raise forms.ValidationError('Usuario o contraseña invalidos')
 
         return self.cleaned_data
+
+
+class UpdatePasswordUserForm(forms.Form):
+    password1 = forms.CharField(
+        label='Contraseña Actual',
+        required=True,
+        widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña Actual'})
+    )
+    password2 = forms.CharField(
+        label='Contraseña nueva',
+        required=True,
+        widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña nueva'})
+    )
+
+
+class VerificationdUserForm(forms.Form):
+    cod_registro = forms.CharField(
+        label='Codigo de registro',
+        required=True,
+        widget=forms.PasswordInput(attrs={'placeholder': 'Codigo de registro'})
+    )
+
+    # Recibiendo en el constructor el parametor de la url
+    def __init__(self, pk, *args, **kwargs):
+        self.id_user_param = pk
+        super(VerificationdUserForm, self).__init__(*args, **kwargs)
+
+    def clean_cod_registro(self):
+
+        cod_registro = self.cleaned_data['cod_registro']
+
+        if len(cod_registro) == 6:
+            usuario_exists = User.objects.cod_registro_validate(id_user=self.id_user_param, cod_registro=cod_registro)
+
+            if not usuario_exists:
+                raise forms.ValidationError('El codigo enviado es incorrecto o no coincide con el usuario.')
+
+        else:
+            raise forms.ValidationError('El codigo enviado es incorrecto.')

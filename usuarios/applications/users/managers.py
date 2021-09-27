@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager
 
+
 class UserManager(BaseUserManager, models.Manager):
 
     # is_staff => permite o no acceder al administrador
@@ -25,3 +26,9 @@ class UserManager(BaseUserManager, models.Manager):
     # Sobreescribiendo la funcion que permite crear usuarios
     def create_user(self, username, email, password=None, **extra_fields):
         return self._create_user(username, email, password, False, False, **extra_fields)
+
+    def cod_registro_validate(self, id_user, cod_registro):
+        # Consultando en la bd si el usuario y codigo de registro existen
+        if self.filter(id=id_user, cod_registro=cod_registro).exists():
+            return True
+        return False

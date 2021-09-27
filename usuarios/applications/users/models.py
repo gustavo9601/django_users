@@ -18,8 +18,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     nombres = models.CharField(max_length=30, blank=True)
     apellidos = models.CharField(max_length=30, blank=True)
     genero = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
+    cod_registro = models.CharField(max_length=6, blank=True)
+
+    # campos que requiere la clase abstracta implementar
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
 
     # Se especifica por que campo se podra acceder al dasmin dashboard
     USERNAME_FIELD = 'username'

@@ -25,3 +25,5 @@ class HomePageView(LoginRequiredMixin, TemplateView):
     # Al herededar de LoginRequiredMixin, se define login_url, para definir a donde se redirecciona si
     # no esta autenticado
     login_url = reverse_lazy('users_app:login')
+
+
